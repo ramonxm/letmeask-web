@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Button from "../components/Button";
 import "../styles/auth.scss";
 
@@ -22,7 +24,7 @@ const NewRoom = () => {
             <Button type="submit">Criar sala</Button>
           </form>
           <p>
-            Quer entrar em uma sala existe? <a href="#">Clique aqui</a>
+            Quer entrar em uma sala existe? <Link to="/">Clique aqui</Link>
           </p>
         </div>
       </main>
