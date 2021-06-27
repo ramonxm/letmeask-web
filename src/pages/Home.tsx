@@ -1,3 +1,4 @@
+import Button from "../components/Button";
 import "../styles/auth.scss";
 
 const Home = () => {
@@ -22,7 +23,7 @@ const Home = () => {
           <div className="separator">Ou entre em uma sala</div>
           <form>
             <input type="text" placeholder="Digite o código da sala" />
-            <button type="submit">Entrar na sala</button>
+            <Button type="submit">Entrar na sala</Button>
           </form>
         </div>
       </main>
