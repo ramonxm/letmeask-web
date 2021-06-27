@@ -1,11 +1,17 @@
 import { useHistory } from "react-router-dom";
+
+import { useAuth } from "../hooks/useAuth";
+
 import Button from "../components/Button";
 import "../styles/auth.scss";
 
 const Home = () => {
   const history = useHistory();
-
-  function handleCreateRoom() {
+  const { user, signInWithGoogle } = useAuth();
+  async function handleCreateRoom() {
+    if (!user) {
+      await signInWithGoogle();
+    }
     history.push("/rooms/new");
   }
   return (
