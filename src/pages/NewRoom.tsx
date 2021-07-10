@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { database } from "../services/firebase";
 import { useAuth } from "../hooks/useAuth";
 import Button from "../components/Button";
@@ -9,7 +9,7 @@ import "../styles/auth.scss";
 const NewRoom = () => {
   const { user } = useAuth();
   const [newRoom, setNewRoom] = useState("");
-
+  const history = useHistory();
   const handleCreateRoom = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -22,7 +22,10 @@ const NewRoom = () => {
       title: newRoom,
       authorId: user?.id,
     });
+
+    history.push(`/rooms/${firebaseRoom.key}`);
   };
+
   return (
     <div id="page-auth">
       <aside>
