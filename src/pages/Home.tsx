@@ -2,10 +2,9 @@ import { FormEvent } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-
+import { database } from "../services/firebase";
 import Button from "../components/Button";
 import "../styles/auth.scss";
-import { database } from "../services/firebase";
 
 const Home = () => {
   const history = useHistory();
@@ -53,7 +52,7 @@ const Home = () => {
             Crie sua sala com o Google
           </button>
           <div className="separator">Ou entre em uma sala</div>
-          <form>
+          <form onSubmit={handleJoinRoom}>
             <input
               type="text"
               placeholder="Digite o código da sala"

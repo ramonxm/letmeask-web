@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import RoomCode from "../components/RoomCode";
 import "../styles/room.scss";
 import { useEffect } from "react";
+import Question from "../components/Question";
 
 type FirebaseQuestions = Record<
   string,
@@ -24,7 +25,7 @@ type RoomParams = {
   id: string;
 };
 
-type Question = {
+type QuestionsType = {
   id: string;
   author: {
     name: string;
@@ -37,7 +38,7 @@ type Question = {
 
 const Room = () => {
   const [newQuestion, setNewQuestion] = useState("");
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionsType[]>([]);
   const [title, setTitle] = useState("");
   const { user } = useAuth();
   const params = useParams<RoomParams>();
@@ -129,7 +130,18 @@ const Room = () => {
           </div>
         </form>
 
-        {JSON.stringify(questions)}
+              <div className="questions-list">
+
+        {questions.map(question => {
+          return (
+            <Question
+            key={question.id}
+            content={question.content}
+            author={question.author}
+            />
+            )
+          })}
+          </div>
       </main>
     </div>
   );
