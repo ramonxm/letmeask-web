@@ -1,18 +1,17 @@
-import '../styles/question.scss'
+import { ReactNode } from "react";
+
+import "../styles/question.scss";
 
 type QuestionProps = {
   content: string;
   author: {
-    name: string,
-    avatar: string,
-  }
-}
+    name: string;
+    avatar: string;
+  };
+  children?: ReactNode;
+};
 
-
-
-const Question = ({
-  content, author
-}: QuestionProps) => {
+const Question = ({ content, author, children }: QuestionProps) => {
   return (
     <div className="question">
       <p>{content}</p>
@@ -21,12 +20,10 @@ const Question = ({
           <img src={author.avatar} alt={author.name} />
           <span>{author.name}</span>
         </div>
+        <div>{children}</div>
       </footer>
-      <div>
-
-      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Question
+export default Question;
