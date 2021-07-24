@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";
 
@@ -11,7 +12,7 @@ type FirebaseQuestions = Record<
     };
     content: string;
     isAnswered: boolean;
-    isHighLighted: boolean;
+    isHighlighted: boolean;
     likes: Record<
       string,
       {
@@ -20,7 +21,8 @@ type FirebaseQuestions = Record<
     >;
   }
 >;
-type QuestionsType = {
+
+type QuestionType = {
   id: string;
   author: {
     name: string;
@@ -28,29 +30,31 @@ type QuestionsType = {
   };
   content: string;
   isAnswered: boolean;
-  isHighLighted: boolean;
+  isHighlighted: boolean;
   likeCount: number;
   likeId: string | undefined;
 };
 
-const useRoom = (roomId: string) => {
+export function useRoom(roomId: string) {
   const { user } = useAuth();
-  const [questions, setQuestions] = useState<QuestionsType[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [title, setTitle] = useState("");
+
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`);
 
     roomRef.on("value", (room) => {
       const databaseRoom = room.val();
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+
       const parsedQuestions = Object.entries(firebaseQuestions).map(
         ([key, value]) => {
           return {
             id: key,
             content: value.content,
             author: value.author,
-            isHighLighted: value.isHighLighted,
-            isAnswered: value.isHighLighted,
+            isHighlighted: value.isHighlighted,
+            isAnswered: value.isAnswered,
             likeCount: Object.values(value.likes ?? {}).length,
             likeId: Object.entries(value.likes ?? {}).find(
               ([key, like]) => like.authorId === user?.id
@@ -58,14 +62,15 @@ const useRoom = (roomId: string) => {
           };
         }
       );
+
       setTitle(databaseRoom.title);
       setQuestions(parsedQuestions);
     });
 
-    roomRef.off("value");
+    return () => {
+      roomRef.off("value");
+    };
   }, [roomId, user?.id]);
 
   return { questions, title };
-};
-
-export default useRoom;
+}

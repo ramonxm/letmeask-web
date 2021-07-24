@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import RoomCode from "../components/RoomCode";
 import "../styles/room.scss";
 import Question from "../components/Question";
-import useRoom from "../hooks/useRoom";
+import { useRoom } from "../hooks/useRoom";
 
 type RoomParams = {
   id: string;
