@@ -11,7 +11,7 @@ const RoomCode = (props: RoomCodeProps) => {
   return (
     <button className="room-code" onClick={copyRoomCodeToClipboard}>
       <div>
-        <img src="../assets/images/copy.svg" alt="Copy room code" />
+        <img src="/assets/images/copy.svg" alt="Copy room code" />
       </div>
       <span>Sala #{props.code}</span>
     </button>
